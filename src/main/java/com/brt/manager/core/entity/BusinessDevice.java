@@ -21,16 +21,12 @@ public class BusinessDevice {
             parameters = {@Parameter(name = "sequence_name", value = "SEQ_BUSINESS_DEVICE")}
     )
     private Long id;
-
     @Column
     private String name;
-
     @Column
     private String code;
-
     @Column
     private String type;
-
     @Column
     private Timestamp createTime;
     @Column

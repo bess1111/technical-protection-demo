@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface CameraDeviceRepository  extends JpaRepository<CameraDevice, Long> {
 
-    List<CameraDevice> findCameraDevicesByBusinessDeviceId(Long id);
+    List<CameraDevice> findCameraDeviceByBusinessDeviceId(Long businessDeviceId);
 
-    List<CameraDevice> findByBusinessDeviceId(Long businessDeviceId);
 }

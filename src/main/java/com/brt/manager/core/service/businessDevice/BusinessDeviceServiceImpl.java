@@ -53,7 +53,7 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
         }
 
         BusinessDevice  businessDevice = businessDeviceRepository.findByCode(viewBusinessDevice.getCode());
-        if(null!=businessDevice) {
+        if(null!= businessDevice) {
             throw new CustomBusinessException("所填写的code已存在");
         }
 
@@ -74,10 +74,10 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
 
 
         //insert camera device
-        List<ViewCameraDevice>viewCameraDevices = viewBusinessDevice.getViewCameraDevices();
+        List<ViewCameraDevice> viewCameraDevices = viewBusinessDevice.getViewCameraDevices();
 
         if (viewCameraDevices!=null&&!viewCameraDevices.isEmpty()){
-            List<CameraDevice>cameraDevices = this.getCameraDevicesByViewCameraDevices(viewCameraDevices,businessDevice,0);
+            List<CameraDevice> cameraDevices = this.getCameraDevicesByViewCameraDevices(viewCameraDevices,businessDevice,0);
             cameraDevices =cameraDeviceRepository.saveAll(cameraDevices);
             if (null==cameraDevices||0==cameraDevices.size()){
                 this.logger.warn("cameraDevice can not be found");
@@ -155,9 +155,9 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
         }
 
         //update viewCameraDevices
-        List<ViewCameraDevice>viewCameraDevices = viewBusinessDevice.getViewCameraDevices();
+        List<ViewCameraDevice> viewCameraDevices = viewBusinessDevice.getViewCameraDevices();
         if (null!=viewCameraDevices){
-            List<CameraDevice>cameraDevices = cameraDeviceRepository.findByBusinessDeviceId(businessDeviceId);
+            List<CameraDevice> cameraDevices = cameraDeviceRepository.findCameraDeviceByBusinessDeviceId(businessDeviceId);
             if ( 0 != viewCameraDevices.size()) {
                 cameraDeviceRepository.deleteAll(cameraDevices);
                cameraDevices = getCameraDevicesByViewCameraDevices(viewCameraDevices,businessDevice,1);
@@ -238,7 +238,7 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
             return false;
         }
 
-        List<CameraDevice> cameraDevices =  cameraDeviceRepository.findCameraDevicesByBusinessDeviceId(businessDeviceId);
+        List<CameraDevice> cameraDevices =  cameraDeviceRepository.findCameraDeviceByBusinessDeviceId(businessDeviceId);
         if (null != cameraDevices){
             if (0!=cameraDevices.size()){
                 cameraDeviceRepository.deleteAll(cameraDevices);
@@ -276,9 +276,9 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
         //po to vo
         ViewBusinessDevice viewBusinessDevice = this.getViewBusinessDeviceByBusinessDevice(businessDevice.get());
 
-        List<CameraDevice>cameraDevices = cameraDeviceRepository.findCameraDevicesByBusinessDeviceId(businessDeviceId);
+        List<CameraDevice>cameraDevices = cameraDeviceRepository.findCameraDeviceByBusinessDeviceId(businessDeviceId);
         if (cameraDevices!=null&&!cameraDevices.isEmpty()){
-            List<ViewCameraDevice>viewCameraDevices = getViewCameraDevicesByCameraDevices(cameraDevices);
+            List<ViewCameraDevice> viewCameraDevices = getViewCameraDevicesByCameraDevices(cameraDevices);
             viewBusinessDevice.setViewCameraDevices(viewCameraDevices);
         }
 
@@ -314,7 +314,7 @@ public class BusinessDeviceServiceImpl implements BusinessDeviceService{
             return null;
         }
 
-        List<BusinessDevice> businessDevices =  page.getContent();
+        List<BusinessDevice> businessDevices = page.getContent();
         List<ViewBusinessDevice> viewBusinessDevice = this.getViewBusinessDeviceByBusinessDevices(businessDevices);
         Page<ViewBusinessDevice> pageViewBusinessDevice = new PageImpl<>(viewBusinessDevice, pageable, businessDevices.size());
         return pageViewBusinessDevice;
