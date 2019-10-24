@@ -1,0 +1,14 @@
+#默认开发环境
+spring:
+  profiles.active: dev
+  
+---
+#开发环境
+spring:
+  profiles: dev
+  datasource.url: jdbc:oracle:thin:@192.168.10.207:1521:alfresco
+  datasource.username: location
+  datasource.password: location
+  datasource.driver-class-name: oracle.jdbc.driver.OracleDriver
+server:
+  port: 8080
